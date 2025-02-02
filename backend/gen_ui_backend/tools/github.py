@@ -4,6 +4,7 @@ from typing import Dict, Union
 import requests
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain_core.tools import tool
+from security import safe_requests
 
 
 class GithubRepoInput(BaseModel):
@@ -26,7 +27,7 @@ def github_repo(owner: str, repo: str) -> Union[Dict, str]:
     url = f"https://api.github.com/repos/{owner}/{repo}"
 
     try:
-        response = requests.get(url, headers=headers)
+        response = safe_requests.get(url, headers=headers)
         response.raise_for_status()
         repo_data = response.json()
         return {
