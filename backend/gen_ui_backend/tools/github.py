@@ -26,7 +26,7 @@ def github_repo(owner: str, repo: str) -> Union[Dict, str]:
     url = f"https://api.github.com/repos/{owner}/{repo}"
 
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=60)
         response.raise_for_status()
         repo_data = response.json()
         return {
